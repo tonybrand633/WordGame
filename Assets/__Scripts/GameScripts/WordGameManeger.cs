@@ -103,11 +103,6 @@ public class WordGameManeger : MonoBehaviour
             }
         }
         level.subWords = subWords;
-        foreach (string w in level.subWords) 
-        {
-            Debug.Log(w);
-        }
-
         //按照默认字母顺序排列
         level.subWords.Sort();
 
