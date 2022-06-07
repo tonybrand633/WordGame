@@ -154,17 +154,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 345694709}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c150834ec27b82c4f903b0709cb54542, type: 3}
+  m_Script: {fileID: 11500000, guid: ba7dada82a6d39e4a94663accc3012ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wordListText: {fileID: 4900000, guid: 22e5a51e6732c452fab90efed574a934, type: 3}
-  wordLengthMin: 3
-  wordLengthMax: 7
-  numToYield: 10000
-  currentLine: 0
-  totalLines: 0
-  longWordCount: 0
-  wordCount: 0
+  prefabLetter: {fileID: 6772208761939513630, guid: 0a2419c2a315b9049b47aaf84491c80f,
+    type: 3}
+  wordArea:
+    serializedVersion: 2
+    x: -24
+    y: 19
+    width: 35
+    height: 25
+  letterSize: 1.5
+  showAllWyrd: 1
+  bigLetterSize: 4
+  mode: 0
+  curLevel:
+    levelNum: 0
+    longWordIndex: 0
+    word: 
+    subWords: []
 --- !u!81 &345694711
 AudioListener:
   m_ObjectHideFlags: 0
@@ -190,15 +199,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 345694709}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba7dada82a6d39e4a94663accc3012ed, type: 3}
+  m_Script: {fileID: 11500000, guid: c150834ec27b82c4f903b0709cb54542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
-  curLevel:
-    levelNum: 0
-    longWordIndex: 0
-    word: 
-    subWords: []
+  wordListText: {fileID: 4900000, guid: 22e5a51e6732c452fab90efed574a934, type: 3}
+  wordLengthMin: 3
+  wordLengthMax: 7
+  numToYield: 10000
+  currentLine: 0
+  totalLines: 0
+  longWordCount: 0
+  wordCount: 0
 --- !u!20 &345694714
 Camera:
   m_ObjectHideFlags: 0
@@ -209,7 +220,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.33765215, g: 0.5353355, b: 0.6655173, a: 0.019607844}
+  m_BackGroundColor: {r: 0.044054836, g: 0.051673844, b: 0.05660379, a: 0.019607844}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Myrd 
+public class Wyrd 
 {
     //该单词的字符串表示
     public string str;

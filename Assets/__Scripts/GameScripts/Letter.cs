@@ -13,12 +13,16 @@ public class Letter : MonoBehaviour
 
     public bool big = false;//对于大字母有不同的操作
 
+    void Awake()
+    {
+        textMesh = GetComponentInChildren<TextMesh>();
+        render = textMesh.GetComponent<Renderer>();
+    }
+
     // Start is called before the first frame update
     void Start()
-    {
-        textMesh = GetComponentInChildren<TextMesh>();        
-        render = textMesh.GetComponent<Renderer>();
-        visiable = false;
+    {        
+        //visiable = false;
     }
 
     // Update is called once per frame
@@ -63,6 +67,7 @@ public class Letter : MonoBehaviour
         set 
         {
             render.enabled = value;
+            //Debug.Log("SetTrue");
         }
     }
 
