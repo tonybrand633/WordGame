@@ -16,9 +16,9 @@ public class Letter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textMesh = GetComponent<TextMesh>();
+        textMesh = GetComponentInChildren<TextMesh>();        
         render = textMesh.GetComponent<Renderer>();
-
+        visiable = false;
     }
 
     // Update is called once per frame
