@@ -161,19 +161,24 @@ MonoBehaviour:
     type: 3}
   wordArea:
     serializedVersion: 2
-    x: -24
-    y: 19
+    x: -30.97
+    y: 19.91
     width: 35
     height: 25
   letterSize: 1.5
   showAllWyrd: 1
   bigLetterSize: 4
+  bigColorDim: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  bigColorSelect: {r: 1, g: 1, b: 1, a: 1}
+  bigLetterCenter: {x: 0, y: -15, z: 0}
   mode: 0
   curLevel:
-    levelNum: 0
+    levelNum: -1
     longWordIndex: 0
     word: 
     subWords: []
+  bigLetters: []
+  bigLettersActive: []
 --- !u!81 &345694711
 AudioListener:
   m_ObjectHideFlags: 0

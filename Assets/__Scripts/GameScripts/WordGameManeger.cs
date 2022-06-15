@@ -6,6 +6,9 @@ using UnityEngine;
 public class WordGameManeger : MonoBehaviour
 {
     public static WordGameManeger W;
+    
+
+
 
     //LayOut Useage
     public GameObject prefabLetter;
@@ -13,10 +16,16 @@ public class WordGameManeger : MonoBehaviour
     public float letterSize = 1.5f;
     public bool showAllWyrd = true;
     public float bigLetterSize = 4f;
+    public Color bigColorDim = new Color(0, 0, 0);
+    public Color bigColorSelect = Color.white;
+    public Vector3 bigLetterCenter = new Vector3(0, 0, 0);
 
     public GameMode mode = GameMode.preGame;
     public WordLevel curLevel;
     public List<Wyrd> wyrds;
+    public List<Letter> bigLetters;
+    public List<Letter> bigLettersActive;
+
 
     public enum GameMode 
     {
@@ -148,10 +157,11 @@ public class WordGameManeger : MonoBehaviour
         float left = 0;
         float colunmWidth = 3;
         char c;
-        //Color col;
+        //bigLettersMatter
+        Color col;
         Wyrd wyrd;
 
-        int numRows = Mathf.RoundToInt(wordArea.width / letterSize);
+        int numRows = Mathf.RoundToInt(wordArea.height / letterSize);
 
 
         
@@ -169,8 +179,8 @@ public class WordGameManeger : MonoBehaviour
                 lett = go.GetComponent<Letter>();                
                 lett.c = c;
 
-                //关于位置
-                pos = new Vector3(wordArea.x + left + j * letterSize, wordArea.y, 0);
+                //关于位置，他这里很巧妙的用了y的位置都是一样的概念
+                pos = new Vector3(wordArea.x + left +j*letterSize, wordArea.y, 0);
                 pos.y -= (i % numRows) * letterSize;
                 lett.pos = pos;
                 go.transform.localScale = Vector3.one * letterSize;
@@ -186,8 +196,61 @@ public class WordGameManeger : MonoBehaviour
 
             if (i%numRows==numRows-1) 
             {
-                left += (colunmWidth + 0.5f) * letterSize;
+                left += (colunmWidth);
             }
+        }
+
+        //生成大写字母
+        bigLetters = new List<Letter>();
+        bigLettersActive = new List<Letter>();
+
+        for (int i = 0; i < curLevel.word.Length; i++)
+        {
+            c = curLevel.word[i];
+            go = Instantiate(prefabLetter) as GameObject;
+            lett = go.GetComponent<Letter>();
+            lett.c = c;
+            go.transform.localScale = Vector3.one * bigLetterSize;
+            pos = bigLetterCenter;
+            lett.pos = pos;
+            col = bigColorDim;
+            lett.color = col;
+            lett.big = true;
+            lett.visiable = true;
+            bigLetters.Add(lett);
+        }
+
+        bigLetters = ShufferBigWord(bigLetters);
+        ArrangeBigLetters();
+        mode = GameMode.inLevel;
+
+    }
+
+    List<Letter> ShufferBigWord(List<Letter>bigWordsList) 
+    {
+        List<Letter> resList = new List<Letter>();
+        int index;
+        while (bigWordsList.Count>0) 
+        {
+            //排除（不包括）bigWordsList.Count
+            index = Random.Range(0, bigWordsList.Count);
+            Letter tempL = bigWordsList[index];
+            resList.Add(tempL);
+            bigWordsList.RemoveAt(index);
+        }
+        return resList;
+    }
+
+    void ArrangeBigLetters() 
+    {
+        Letter lett;
+        float halfWidth = bigLetters.Count/2f;
+        for (int i = 0; i < bigLetters.Count; i++)
+        {
+            lett = bigLetters[i];
+            Vector3 pos = bigLetterCenter;
+            pos.x += (i-halfWidth)*bigLetterSize;
+            lett.pos = pos;
         }
     }
 }
