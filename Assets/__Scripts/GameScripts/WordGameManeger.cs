@@ -16,7 +16,7 @@ public class WordGameManeger : MonoBehaviour
     public float letterSize = 1.5f;
     public bool showAllWyrd = true;
     public float bigLetterSize = 4f;
-    public Color bigColorDim = new Color(0, 0, 0);
+    public Color bigColorDim = new Color(0.8f, 0.8f, 0.8f);
     public Color bigColorSelect = Color.white;
     public Vector3 bigLetterCenter = new Vector3(0, 0, 0);
 
@@ -25,6 +25,8 @@ public class WordGameManeger : MonoBehaviour
     public List<Wyrd> wyrds;
     public List<Letter> bigLetters;
     public List<Letter> bigLettersActive;
+    public string testword;
+    public string UpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
     public enum GameMode 
@@ -54,7 +56,54 @@ public class WordGameManeger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Letter lett;
+        char c;
+
+        switch (mode) 
+        {
+            case GameMode.inLevel:
+                foreach (char cInput in Input.inputString)
+                {
+                    c = System.Char.ToUpperInvariant(cInput);
+                    
+                    Debug.Log("监控输入：" + c);
+                    if (UpperCase.Contains(c)) 
+                    {
+                        lett = FindLetterByNext(c);
+                        if (lett!=null) 
+                        {
+                            //Debug.Log("找到Letter");
+                            testword += lett.c.ToString();
+                            Debug.Log(testword);
+                            bigLettersActive.Add(lett);
+                            bigLetters.Remove(lett);
+                            lett.color = bigColorSelect;
+                            ArrangeBigLetters();
+                        }
+                    }
+                    //下面几种情况，删除-确认-重排BigLetters
+
+                }
+                break;
+        }
         
+
+        
+
+        
+    }
+
+    Letter FindLetterByNext(char c) 
+    {
+        foreach (Letter lett in bigLetters) 
+        {
+            if (lett.c == c) 
+            {
+                return lett;
+            }
+        }
+        return null;
+
     }
 
     public WordLevel MakeWordLevel(int curLevelIndex = -1) 
@@ -250,6 +299,16 @@ public class WordGameManeger : MonoBehaviour
             lett = bigLetters[i];
             Vector3 pos = bigLetterCenter;
             pos.x += (i-halfWidth)*bigLetterSize;
+            lett.pos = pos;
+        }
+
+        halfWidth = bigLettersActive.Count / 2f;
+        for (int i = 0; i < bigLettersActive.Count; i++)
+        {
+            lett = bigLettersActive[i];
+            Vector3 pos = bigLetterCenter;
+            pos.x += (i - halfWidth) * bigLetterSize;
+            pos.y += bigLetterSize * 1.5f;
             lett.pos = pos;
         }
     }
