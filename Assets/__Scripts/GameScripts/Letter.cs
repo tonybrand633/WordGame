@@ -10,19 +10,23 @@ public class Letter : MonoBehaviour
 
     public TextMesh textMesh;
     public Renderer render;
+    public Renderer textRenderer;
+    
 
     public bool big = false;//对于大字母有不同的操作
 
     void Awake()
     {
         textMesh = GetComponentInChildren<TextMesh>();
-        render = textMesh.GetComponent<Renderer>();
+        textRenderer = textMesh.GetComponent<Renderer>();
+        render = GetComponent<Renderer>();
+        visiable = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {        
-        //visiable = false;
+        
     }
 
     // Update is called once per frame
@@ -62,11 +66,11 @@ public class Letter : MonoBehaviour
     {
         get 
         {
-            return render.enabled;
+            return textRenderer.enabled;
         }
         set 
         {
-            render.enabled = value;
+            textRenderer.enabled = value;
             //Debug.Log("SetTrue");
         }
     }

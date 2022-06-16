@@ -18,6 +18,7 @@ public class WordGameManeger : MonoBehaviour
     public float bigLetterSize = 4f;
     public Color bigColorDim = new Color(0.8f, 0.8f, 0.8f);
     public Color bigColorSelect = Color.white;
+    public Color targetFoundColor = Color.white;
     public Vector3 bigLetterCenter = new Vector3(0, 0, 0);
 
     public GameMode mode = GameMode.preGame;
@@ -65,8 +66,7 @@ public class WordGameManeger : MonoBehaviour
                 foreach (char cInput in Input.inputString)
                 {
                     c = System.Char.ToUpperInvariant(cInput);
-                    
-                    Debug.Log("监控输入：" + c);
+
                     if (UpperCase.Contains(c)) 
                     {
                         lett = FindLetterByNext(c);
@@ -74,7 +74,7 @@ public class WordGameManeger : MonoBehaviour
                         {
                             //Debug.Log("找到Letter");
                             testword += lett.c.ToString();
-                            Debug.Log(testword);
+                            //Debug.Log(testword);
                             bigLettersActive.Add(lett);
                             bigLetters.Remove(lett);
                             lett.color = bigColorSelect;
@@ -82,15 +82,102 @@ public class WordGameManeger : MonoBehaviour
                         }
                     }
                     //下面几种情况，删除-确认-重排BigLetters
+                    if (c == '\b') 
+                    {
+                        if (bigLettersActive.Count>0) 
+                        {
+                            int index = bigLettersActive.Count-1;
+                            lett = bigLettersActive[index];
+                            bigLettersActive.Remove(lett);
+                            bigLetters.Add(lett); 
+
+                            if (testword.Length > 0)
+                            {
+                                testword = testword.Substring(0, testword.Length - 1);
+                            }
+                            else 
+                            {
+                                testword = "";
+                            }
+                            lett.color = bigColorDim;
+                            ArrangeBigLetters();
+                        }                    
+                    }
+
+                    if (c == '\r'||c == '\n') 
+                    {
+                        CheckWord();
+                    }
+
+                    if (c == ' ') 
+                    {
+                        ShufferBigWord(bigLetters);
+                        ArrangeBigLetters(); 
+                    }
 
                 }
                 break;
+        }                        
+    }
+
+    void CheckWord() 
+    {
+        string subWord;
+        bool testFound = false;
+        List<int> containsWords = new List<int>();
+
+        //这里运用的是curLevel.SubWords的索引和Wyrds的索引是一致的
+        for (int i = 0; i < curLevel.subWords.Count; i++)
+        {
+            subWord = curLevel.subWords[i];
+            //如果这个单词已经被找到了，跳出本次循环的其余部分
+            if (wyrds[i].found) 
+            {
+                continue;
+            }
+
+            if (string.Equals(subWord, testword))
+            {
+                HighlightTarget(i);
+                testFound = true;
+            } else if (testword.Contains(subWord)) 
+            {
+                //加入包含的单词
+                containsWords.Add(i);
+            }
         }
-        
+        if (testFound) 
+        {
+            int numContain = containsWords.Count;
+            int ndx;
+            for (int i = 0; i < numContain; i++) 
+            {
+                ndx = numContain - i - 1;
+                HighlightTarget(containsWords[ndx]);
+            }
+        }
+        ClearBigLettersActive();        
+    }
 
-        
+    void HighlightTarget(int index) 
+    {
+        wyrds[index].found = true;
+        wyrds[index].color = targetFoundColor;
+        wyrds[index].visiable = true;
+    }
 
-        
+    void ClearBigLettersActive() 
+    {
+        Letter lett;
+        testword = "";
+        for (int i = 0; i < bigLettersActive.Count; i++)
+        {
+            lett = bigLettersActive[i];
+            lett.color = bigColorDim;
+            bigLetters.Add(lett);
+        }
+        bigLettersActive.Clear();
+        ArrangeBigLetters();
     }
 
     Letter FindLetterByNext(char c) 

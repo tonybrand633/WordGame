@@ -166,10 +166,11 @@ MonoBehaviour:
     width: 35
     height: 25
   letterSize: 1.5
-  showAllWyrd: 1
+  showAllWyrd: 0
   bigLetterSize: 4
-  bigColorDim: {r: 0.8, g: 0.8, b: 0.8, a: 1}
-  bigColorSelect: {r: 1, g: 1, b: 1, a: 1}
+  bigColorDim: {r: 1, g: 0.051886797, b: 0.051886797, a: 1}
+  bigColorSelect: {r: 0.2628392, g: 0.8490566, b: 0.11614456, a: 1}
+  targetFoundColor: {r: 0.2627451, g: 0.85098046, b: 0.11764707, a: 1}
   bigLetterCenter: {x: 0, y: -15, z: 0}
   mode: 0
   curLevel:
@@ -179,6 +180,8 @@ MonoBehaviour:
     subWords: []
   bigLetters: []
   bigLettersActive: []
+  testword: 
+  UpperCase: ABCDEFGHIJKLMNOPQRSTUVWXYZ
 --- !u!81 &345694711
 AudioListener:
   m_ObjectHideFlags: 0
