@@ -9,7 +9,7 @@ public enum BoundsTest {
     offScreen   // Are the bounds entirely off screen
 }
 
-public class Utils : MonoBehaviour {
+public class Utils {
 
 
     //============================ Bounds Functions ============================\
@@ -382,7 +382,7 @@ public class Utils : MonoBehaviour {
         for (int i=1; i<objs.Length; i++) {
             s += "\t"+objs[i].ToString();
         }
-        print (s);
+        Debug.Log(s);
     }
 
 

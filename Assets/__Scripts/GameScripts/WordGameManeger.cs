@@ -146,6 +146,7 @@ public class WordGameManeger : MonoBehaviour
                 containsWords.Add(i);
             }
         }
+        //找到该单词包含的其他单词,并且一并显示出来
         if (testFound) 
         {
             int numContain = containsWords.Count;
